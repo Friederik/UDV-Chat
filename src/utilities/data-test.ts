@@ -7,19 +7,34 @@ export const user1: User = {
     color: 'green'
 }
 
-export const user2: User = {
+const user2: User = {
     id: 'u-2',
     name: 'Анна',
     password: '4321',
     color: 'orchid'
 }
 
-export const user3: User = {
+const user3: User = {
     id: 'u-3',
     name: 'Валентин',
     password: '1111',
     color: 'red'
 }
+
+const user4: User = {
+    id: 'u-4',
+    name: 'Геннадий',
+    password: 'fortniteswag727',
+    color: 'purple'
+}
+
+let myUsers: Map<string, User> = new Map()
+myUsers.set('u-1', user1)
+myUsers.set('u-2', user2)
+myUsers.set('u-3', user3)
+myUsers.set('u-4', user4)
+
+export const users = myUsers
 
 let m1: MessageProps[] = [
     {
@@ -112,6 +127,12 @@ let m1: MessageProps[] = [
     },
     {
         id: 'm-9',
+        user: user4,
+        activeUser: user2,
+        text: "Неделю на чебупицце сижу"
+    },
+    {
+        id: 'm-10',
         user: user2,
         activeUser: user2,
         text: "Ты нормальный? Все в порядке?"
@@ -136,5 +157,10 @@ export const room2: RoomProps = {
 
 export const room3: RoomProps = {
     selectedUser: user3,
+    messageHistory: messagesRoom1
+}
+
+export const room4: RoomProps = {
+    selectedUser: user4,
     messageHistory: messagesRoom1
 }

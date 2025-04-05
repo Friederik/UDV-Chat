@@ -8,7 +8,7 @@ const MessageHistory = (props : RoomProps) => {
     })
 
     return(
-        <section className={classes.body}>
+        <section className={classes.messageHistory}>
             {props.messageHistory.map(message => <Message key={message.id} {...message}/>)}
         </section>
     )

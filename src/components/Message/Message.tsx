@@ -7,12 +7,12 @@ const Message = ( props: MessageProps ) => {
     const now = new Date()   
 
     return (
-      <article className={`${classes.body} ${isActive ? classes.active : ''}`}>
-        <header style={{backgroundColor: props.user.color}} className={classes.header}>
+      <article className={`${classes.message} ${isActive ? classes['message--active'] : ''}`}>
+        <header style={{backgroundColor: props.user.color}} className={classes.message__header}>
           <span>{props.user.name}</span>
           <span> {now.toLocaleTimeString()}</span>
         </header>
-        <p>{props.text}</p>
+        <p className={classes.message__p}>{props.text}</p>
       </article>
     )
 }
