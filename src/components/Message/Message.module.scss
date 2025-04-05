@@ -1,0 +1,22 @@
+.body {
+    width: 20rem;
+    border: 0.2rem #2E9AFF groove;
+    background-color: navy;
+    border-radius: 0.2rem;
+    color: white;
+
+    p {
+        text-align: justify;
+        padding: 0.3rem;
+        padding-inline: 1rem;
+    }
+}
+
+.header {
+    padding: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    background-color: blue;
+    display: flex;
+    justify-content: space-between;
+}
