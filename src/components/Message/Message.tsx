@@ -1,6 +1,7 @@
 import message from './Message.module.scss'
 
 interface MessageProps {
+    id: number
     author: string
     authorColor: string
     text: string
@@ -8,14 +9,14 @@ interface MessageProps {
 
 const now = new Date()
 
-const Message: React.FC<MessageProps> = ({ author, authorColor, text }) => {
+const Message = ( props: MessageProps ) => {
     return (
       <article className={message.body}>
-        <header style={{backgroundColor: authorColor}} className={message.header}>
-          <span>{author}</span>
+        <header style={{backgroundColor: props.authorColor}} className={message.header}>
+          <span>{props.author}</span>
           <span> {now.toLocaleTimeString()}</span>
         </header>
-        <p>{text}</p>
+        <p>{props.text}</p>
       </article>
     );
   };
