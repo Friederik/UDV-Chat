@@ -1,18 +1,17 @@
-import messageHistory from './MessageHistory.module.scss'
+import classes from './MessageHistory.module.scss'
 import Message from '../Message/Message'
-import { messages } from '../../data-test'
+import { RoomProps } from '../../utilities/propTypes'
 
-interface MessageHistoryProps {
-    name: string
-}
+const MessageHistory = (props : RoomProps) => {
+    props.messageHistory.map(message => {
+        message.activeUser = props.selectedUser
+    })
 
-const MessageHistory = ( props : MessageHistoryProps) => {
     return(
-        <section className={messageHistory.body}>
-            {messages.map(message => <Message key={message.id} {...message}/>)}
+        <section className={classes.body}>
+            {props.messageHistory.map(message => <Message key={message.id} {...message}/>)}
         </section>
     )
 }
 
 export default MessageHistory
-export type { MessageHistoryProps }

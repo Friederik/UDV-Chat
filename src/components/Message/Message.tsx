@@ -1,24 +1,20 @@
-import message from './Message.module.scss'
-
-interface MessageProps {
-    id: number
-    author: string
-    authorColor: string
-    text: string
-}
-
-const now = new Date()
+import { MessageProps } from '../../utilities/propTypes'
+import classes from './Message.module.scss'
 
 const Message = ( props: MessageProps ) => {
+    const isActive = props.user.id === props.activeUser.id
+
+    const now = new Date()   
+
     return (
-      <article className={message.body}>
-        <header style={{backgroundColor: props.authorColor}} className={message.header}>
-          <span>{props.author}</span>
+      <article className={`${classes.body} ${isActive ? classes.active : ''}`}>
+        <header style={{backgroundColor: props.user.color}} className={classes.header}>
+          <span>{props.user.name}</span>
           <span> {now.toLocaleTimeString()}</span>
         </header>
         <p>{props.text}</p>
       </article>
-    );
-  };
+    )
+}
 
 export default Message
