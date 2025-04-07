@@ -6,7 +6,10 @@ const Input = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value)
-        console.log(event.target.value)
+    }
+
+    const sendMessage = () => {
+        console.log(inputValue)
     }
 
     return (
@@ -29,7 +32,7 @@ const Input = () => {
                 <img src="assets\search.svg" alt="emoji" onClick={() => console.log("Выбор эмоции")}/>
             </button>
             <button>
-                <img src="assets\send.svg" alt="emoji" onClick={() => console.log("Выбор эмоции")}/>
+                <img src="assets\send.svg" alt="emoji" onClick={() => sendMessage()}/>
             </button>
         </div>
     )

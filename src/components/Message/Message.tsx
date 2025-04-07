@@ -1,18 +1,22 @@
-import { MessageProps } from '../../utilities/propTypes'
+import { ChatMessage } from '../../interfaces/propTypes'
 import classes from './Message.module.scss'
 
-const Message = ( props: MessageProps ) => {
-    const isActive = props.user.id === props.activeUser.id
+interface MessageProps {
+  message: ChatMessage
+  isActiveUser: boolean
+}
 
-    const now = new Date()   
+const Message = ( props: MessageProps ) => {
+    const dateStr = props.message.timestamp
+    const date = new Date(dateStr)   
 
     return (
-      <article className={`${classes.message} ${isActive ? classes['message--active'] : ''}`}>
-        <header style={{backgroundColor: props.user.color}} className={classes.message__header}>
-          <span>{props.user.name}</span>
-          <span> {now.toLocaleTimeString()}</span>
+      <article className={`${classes.message} ${props.isActiveUser ? classes['message--active'] : ''}`}>
+        <header style={{backgroundColor: props.message.user.color}} className={classes.message__header}>
+          <span>{props.message.user.name}</span>
+          <span> {date.toLocaleTimeString()}</span>
         </header>
-        <p className={classes.message__p}>{props.text}</p>
+        <p className={classes.message__p}>{props.message.text}</p>
       </article>
     )
 }
