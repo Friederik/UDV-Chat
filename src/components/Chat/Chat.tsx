@@ -3,6 +3,7 @@ import Input from "../Input/Input"
 import * as data from "../../data/mock"
 import { useState } from "react"
 import classes from './Chat.module.scss'
+import RoomPicker from "../RoomPicker/RoomPicker"
 
 const Chat = () => {
     const [currentRoom, setCurrentRoom] = useState(data.room1)
@@ -12,7 +13,6 @@ const Chat = () => {
         const newUser = data.users.get(userId)
         if (newUser) {
             setCurrentUser(newUser)
-            console.log(currentRoom)
         } 
     }
 
@@ -20,7 +20,6 @@ const Chat = () => {
         const newRoom = data.rooms.get(roomId)
         if(newRoom) {
             setCurrentRoom(newRoom)
-            console.log(changeRoom)
         }
 
     }
@@ -28,17 +27,12 @@ const Chat = () => {
     return(
         <div className={classes.chat}>
             <nav style={{marginLeft: 0, marginRight: "auto"}}>
-                {Array.from(data.rooms).map(([key, room]) => 
-                    <button key={key} onClick={() => changeRoom(key)}>
-                        {room.name}
-                    </button>) }
-            </nav>
-            <nav style={{marginLeft: 0, marginRight: "auto"}}>
                 {Array.from(data.users).map(([key, value]) => 
                     <button key={key} onClick={() => changeUser(key)}>
                         {value.name}
                     </button>) }
             </nav>
+            <RoomPicker rooms={data.rooms} changeRoom={changeRoom} />
             <Room room={currentRoom} selectedUser={currentUser}/>
             <Input/>
         </div>

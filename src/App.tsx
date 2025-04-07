@@ -4,7 +4,7 @@ import classes from './styles/App.module.scss'
 function App() {
 
   return (
-    <div className={classes.body}>
+    <div className={classes.app}>
       <Chat/>
     </div>
   )

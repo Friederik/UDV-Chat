@@ -180,5 +180,15 @@ export const room2: ChatRoom = {
 let myRooms: Map<string, ChatRoom> = new Map()
 myRooms.set(room1.id, room1)
 myRooms.set(room2.id, room2)
+myRooms.set("Третий чат", room2)
+myRooms.set("Четвертый чат", room2)
+myRooms.set("Пятый чат", room2)
+myRooms.set("Шестой чат", room2)
+myRooms.set("Седьмой чат", room2)
+myRooms.set("Восьмой чат", room2)
+myRooms.set("22", room2)
+myRooms.set("224", room2)
+myRooms.set("424", room2)
+
 
 export const rooms = myRooms

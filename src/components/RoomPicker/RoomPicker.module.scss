@@ -1,0 +1,35 @@
+.roomPicker {
+    position: relative;
+}
+
+.roomPickerScroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 51rem;
+    margin-left: 0;
+    margin-right: auto;
+    gap: 0.1rem
+}
+
+.roomTab {
+    background-color: darkblue;
+    height: 1.5rem;
+    color: white;
+    border-radius: 0.2rem;
+    border: 0.1rem groove blue;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 7rem;
+}
+
+.roomAddButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 1.5rem;
+    background-color: blue;
+    color: white;
+}
