@@ -1,0 +1,19 @@
+.userPicker {
+    background-color: darkblue;
+    color: white;
+}
+
+.userProfile {
+    padding: 0.2rem;
+    background-color: cadetblue;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.userAvatar {
+    border-radius: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
