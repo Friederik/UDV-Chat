@@ -1,4 +1,5 @@
 .room {
+    position: relative;
     padding: 0.4rem;
     gap: 0.5rem;
     justify-content: end;
@@ -8,4 +9,13 @@
     overflow: auto;
     border: 0.2rem blue groove;
     border-radius: 0.2rem;
+}
+
+.roomEmpty {
+    position: absolute;
+    padding: 0.5rem;
+    bottom: 0;
+    left: 0;
+    color: white;
+    text-align: center;
 }

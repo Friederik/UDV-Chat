@@ -29,7 +29,10 @@ const UserPicker = (props: UserPickerProps) => {
             <div >
                 <nav style={{marginLeft: 0, marginRight: "auto"}}>
                     {Array.from(props.users).map(([userId, user]) => 
-                        <button key={userId} onClick={() => props.changeUser(userId)}>
+                        <button key={userId} onClick={() => { 
+                            props.changeUser(userId) 
+                            props.onClose()
+                            }}>
                             <UserProfile user={user}/>
                         </button>
                     )}

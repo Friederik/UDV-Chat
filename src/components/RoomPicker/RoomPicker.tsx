@@ -6,6 +6,7 @@ import RoomTab from "./RoomTab"
 interface RoomPickerProps {
     rooms: Map<string, ChatRoom>
     changeRoom: (roomId: string) => void
+    addNewRoom: () => void
 }
 
 const RoomPicker = (props: RoomPickerProps) => {
@@ -16,7 +17,7 @@ const RoomPicker = (props: RoomPickerProps) => {
                     <RoomTab key={roomId} room={room} changeRoom={props.changeRoom}/>
                 )}
             </nav>
-            <RoomAddButton/>
+            <RoomAddButton addNewRoom={props.addNewRoom}/>
         </div>
     )
 }

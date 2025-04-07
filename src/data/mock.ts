@@ -140,18 +140,18 @@ let m1: ChatMessage[] = [
 ]
 
 let m2 : ChatMessage[] = [
-    {
-        id: 'm-9',
-        user: user1,
-        text: "Дорогой дневник",
-        timestamp: "2025-04-07T14:30:00.000Z"
-    },
-    {
-        id: 'm-10',
-        user: user1,
-        text: "Я стал чикатилло",
-        timestamp: "2025-04-07T14:31:00.000Z"
-    }
+    // {
+    //     id: 'm-9',
+    //     user: user1,
+    //     text: "Дорогой дневник",
+    //     timestamp: "2025-04-07T14:30:00.000Z"
+    // },
+    // {
+    //     id: 'm-10',
+    //     user: user1,
+    //     text: "Я стал чикатилло",
+    //     timestamp: "2025-04-07T14:31:00.000Z"
+    // }
 ]
 
 for(let i = 0; i < m1.length; i++) {

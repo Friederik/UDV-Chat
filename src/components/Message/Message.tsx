@@ -11,7 +11,7 @@ const Message = ( props: MessageProps ) => {
     const date = new Date(dateStr)   
 
     return (
-      <article className={`${classes.message} ${props.isActiveUser ? classes['message--active'] : ''}`}>
+      <article onDoubleClick={() => console.log(props.message.id)} className={`${classes.message} ${props.isActiveUser ? classes['message--active'] : ''}`}>
         <header style={{backgroundColor: props.message.user.color}} className={classes.message__header}>
           <span>{props.message.user.name}</span>
           <span> {date.toLocaleTimeString()}</span>

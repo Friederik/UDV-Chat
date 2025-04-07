@@ -1,8 +1,12 @@
 import classes from './RoomPicker.module.scss'
 
-const RoomAddButton = () => {
+interface RoomAddButtonProps {
+    addNewRoom: () => void
+}
+
+const RoomAddButton = (props: RoomAddButtonProps) => {
     return(
-        <button className={classes.roomAddButton}>+</button>
+        <button className={classes.roomAddButton} onClick={() => props.addNewRoom()}>+</button>
     )
 }
 

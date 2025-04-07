@@ -1,15 +1,28 @@
 import { useState } from 'react'
 import classes from './Input.module.scss'
 
-const Input = () => {
+interface InputFormProps {
+    addNewMessage: (newMessage: { text: string }) => void
+}
+
+const InputForm = (props: InputFormProps) => {
     const [inputValue, setInputValue] = useState('')
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value)
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && inputValue.trim() !== '') {
+          sendMessage()
+        }
+    }
+
     const sendMessage = () => {
-        console.log(inputValue)
+        if (inputValue.trim() !== '') {
+            props.addNewMessage({text: inputValue})
+        setInputValue('')
+        }
     }
 
     return (
@@ -20,6 +33,7 @@ const Input = () => {
                 type="text" 
                 value={inputValue}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 placeholder='Введите сообщение'
             />
             <button>
@@ -38,4 +52,4 @@ const Input = () => {
     )
 }
 
-export default Input
+export default InputForm
