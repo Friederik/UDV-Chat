@@ -13,15 +13,16 @@ const InputForm = (props: InputFormProps) => {
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && inputValue.trim() !== '') {
-          sendMessage()
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            sendMessage()
         }
     }
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
             props.addNewMessage({text: inputValue})
-        setInputValue('')
+            setInputValue('')
         }
     }
 

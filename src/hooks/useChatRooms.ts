@@ -12,9 +12,9 @@ const useChatRooms = (initialRoom: ChatRoom) => {
     })
 
     const [currentRoom, setCurrentRoom] = useState(() => {
-        const stored = rooms.get('r-1')
-        if (stored) {
-            return stored
+        const stored = Array.from(rooms)
+        if (stored && stored.length > 0) {
+            return stored[0][1]
         }
         rooms.set(initialRoom.id, initialRoom)
         return initialRoom
@@ -30,7 +30,7 @@ const useChatRooms = (initialRoom: ChatRoom) => {
             return newRooms
         })
         
-    }, [currentRoom, rooms])
+    }, [currentRoom])
 
     useEffect(() => {
         const stored = localStorage.getItem('rooms')

@@ -1,12 +1,12 @@
 import { ChatRoom } from "../../interfaces/propTypes"
-import RoomAddButton from "./RoomAddButton"
+
 import classes from "./RoomPicker.module.scss"
 import RoomTab from "./RoomTab"
 
 interface RoomPickerProps {
     rooms: Map<string, ChatRoom>
     changeRoom: (roomId: string) => void
-    addNewRoom: () => void
+    openRoomAddWindow: () => void
 }
 
 const RoomPicker = (props: RoomPickerProps) => {
@@ -17,7 +17,7 @@ const RoomPicker = (props: RoomPickerProps) => {
                     <RoomTab key={roomId} room={room} changeRoom={props.changeRoom}/>
                 )}
             </nav>
-            <RoomAddButton addNewRoom={props.addNewRoom}/>
+            <button className={classes.roomAddButton} onClick={() => props.openRoomAddWindow()}>+</button>
         </div>
     )
 }

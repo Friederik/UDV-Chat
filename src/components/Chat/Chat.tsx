@@ -1,7 +1,7 @@
 import Room from "../Room/Room"
 import * as mock from "../../data/mock"
 import * as data from '../../data/storage'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import classes from './Chat.module.scss'
 import RoomPicker from "../RoomPicker/RoomPicker"
 import UserPicker from "../UserPicker/UserPicker"
@@ -9,11 +9,13 @@ import UserProfile from "../UserPicker/UserProfile"
 import { ChatMessage, ChatRoom } from "../../interfaces/propTypes"
 import InputForm from "../Input/InputForm"
 import useChatRooms from "../../hooks/useChatRooms"
+import RoomAddWindow from "../RoomPicker/RoomAddWindow"
 
 const Chat = () => {
     const { rooms, setRooms, currentRoom, setCurrentRoom } = useChatRooms(data.initialRoom)
-    const [currentUser, setCurrentUser] = useState(mock.user1)
-    const [isUserPickerOpen, setIsUserPickerOpen] = useState<boolean>(false)
+    const [ currentUser, setCurrentUser ] = useState(mock.user1)
+    const [ isUserPickerOpen, setIsUserPickerOpen ] = useState<boolean>(false)
+    const [ isRoomAddWindowOpen, setIsRoomAddWindowOpen ] = useState<boolean>(false)
 
     function changeUser(userId: string): void {
         const newUser = mock.users.get(userId)
@@ -30,10 +32,10 @@ const Chat = () => {
         console.log(rooms.get(roomId))
     }
 
-    function addNewRoom(): void {
+    function addNewRoom(roomName: string): void {
         const newRoom: ChatRoom = {
-            id: `r-${rooms.size+1}`,
-            name: `Чат ${rooms.size+1}`,
+            id: `r-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            name: roomName,
             messageHistory: []
         }
         setRooms(prev => {
@@ -62,6 +64,9 @@ const Chat = () => {
     const openUserPicker = () => setIsUserPickerOpen(true)
     const closeUserPicker = () => setIsUserPickerOpen(false)
 
+    const openRoomAddWindow = () => setIsRoomAddWindowOpen(true)
+    const closeRoomAddWindow = () => setIsRoomAddWindowOpen(false)
+
     return(
         <div className={classes.chat}>
             <div className={classes.userProfile}>
@@ -70,10 +75,12 @@ const Chat = () => {
                     <img src="assets/picker.svg" alt="picker"/>
                 </button>
             </div>
-            <RoomPicker rooms={rooms} changeRoom={changeRoom} addNewRoom={addNewRoom}/>
-            <UserPicker users={mock.users} changeUser={changeUser} isOpen={isUserPickerOpen} onClose={closeUserPicker}/>
+            <RoomPicker rooms={rooms} changeRoom={changeRoom} openRoomAddWindow={openRoomAddWindow}/>
             <Room room={currentRoom} selectedUser={currentUser}/>
             <InputForm addNewMessage={addNewMessage}/>
+
+            <RoomAddWindow addNewRoom={addNewRoom} isOpen={isRoomAddWindowOpen} onClose={closeRoomAddWindow} />
+            <UserPicker users={mock.users} changeUser={changeUser} isOpen={isUserPickerOpen} onClose={closeUserPicker}/>
         </div>
     )
 }
