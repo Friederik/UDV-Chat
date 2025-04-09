@@ -1,7 +1,7 @@
 import Room from "../Room/Room"
 import * as mock from "../../data/mock"
 import * as data from '../../data/storage'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import classes from './Chat.module.scss'
 import RoomPicker from "../RoomPicker/RoomPicker"
 import UserPicker from "../UserPicker/UserPicker"
@@ -14,8 +14,9 @@ import RoomAddWindow from "../RoomPicker/RoomAddWindow"
 const Chat = () => {
     const { rooms, setRooms, currentRoom, setCurrentRoom } = useChatRooms(data.initialRoom)
     const [ currentUser, setCurrentUser ] = useState(mock.user1)
-    const [ isUserPickerOpen, setIsUserPickerOpen ] = useState<boolean>(false)
-    const [ isRoomAddWindowOpen, setIsRoomAddWindowOpen ] = useState<boolean>(false)
+    const [ isUserPickerOpen, setIsUserPickerOpen ] = useState(false)
+    const [ isRoomAddWindowOpen, setIsRoomAddWindowOpen ] = useState(false)
+    const [ isRoomJustDeleted,  setIsRoomJustDeleted] = useState(false)
 
     function changeUser(userId: string): void {
         const newUser = mock.users.get(userId)
@@ -44,6 +45,18 @@ const Chat = () => {
             localStorage.setItem('rooms', JSON.stringify(Array.from(newRooms.entries())))
             return newRooms
         })
+        setCurrentRoom(newRoom)
+    }
+
+    function removeRoom(roomId: string): void {
+        if (rooms.size <= 1) return
+        setRooms(prev => {
+            const newRooms = new Map(prev)
+            newRooms.delete(roomId)
+            localStorage.setItem('rooms', JSON.stringify(Array.from(newRooms.entries())))
+            return newRooms
+        })
+        setIsRoomJustDeleted(true)
     }
 
     const addNewMessage = (newMessage: { text: string }) => {
@@ -61,6 +74,12 @@ const Chat = () => {
         }
     }
 
+    useEffect(() => {
+        const firstKey = rooms.keys().next().value
+        if (firstKey) changeRoom(firstKey)
+        setIsRoomJustDeleted(false)
+    }, [isRoomJustDeleted])
+
     const openUserPicker = () => setIsUserPickerOpen(true)
     const closeUserPicker = () => setIsUserPickerOpen(false)
 
@@ -75,7 +94,7 @@ const Chat = () => {
                     <img src="assets/picker.svg" alt="picker"/>
                 </button>
             </div>
-            <RoomPicker rooms={rooms} changeRoom={changeRoom} openRoomAddWindow={openRoomAddWindow}/>
+            <RoomPicker rooms={rooms} changeRoom={changeRoom} removeRoom={removeRoom} openRoomAddWindow={openRoomAddWindow}/>
             <Room room={currentRoom} selectedUser={currentUser}/>
             <InputForm addNewMessage={addNewMessage}/>
 
