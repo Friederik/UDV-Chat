@@ -8,56 +8,27 @@ import UserPicker from "../UserPicker/UserPicker"
 import UserProfile from "../UserPicker/UserProfile"
 import { ChatMessage, ChatRoom } from "../../interfaces/propTypes"
 import InputForm from "../Input/InputForm"
-import useChatRooms from "../../hooks/useChatRooms"
 import RoomAddWindow from "../RoomPicker/RoomAddWindow"
+import useChatLocalStorage, { ChatTypes } from "../../hooks/useChatLocalStorage"
+import useChatRooms from "../../hooks/useChatRooms"
 
 const Chat = () => {
-    const { rooms, setRooms, currentRoom, setCurrentRoom } = useChatRooms(data.initialRoom)
-    const [ currentUser, setCurrentUser ] = useState(mock.user1)
+    const [
+        currentRoom, setCurrentRoom,
+        rooms, isRoomAddWindowOpen,
+        openRoomAddWindow, closeRoomAddWindow,
+        changeRoom, addNewRoom, removeRoom
+    ] = useChatRooms(data.initialRoom)
+
+    const [
+        users,
+        setUsers,
+        currentUser,
+        setCurrentUser 
+    ] = useChatLocalStorage(ChatTypes.Users, data.initialUser)
     const [ isUserPickerOpen, setIsUserPickerOpen ] = useState(false)
-    const [ isRoomAddWindowOpen, setIsRoomAddWindowOpen ] = useState(false)
-    const [ isRoomJustDeleted,  setIsRoomJustDeleted] = useState(false)
 
-    function changeUser(userId: string): void {
-        const newUser = mock.users.get(userId)
-        if (newUser) {
-            setCurrentUser(newUser)
-        } 
-    }
-
-    function changeRoom(roomId: string): void {
-        const newRoom = rooms.get(roomId)
-        if(newRoom) {
-            setCurrentRoom(newRoom)
-        }
-        console.log(rooms.get(roomId))
-    }
-
-    function addNewRoom(roomName: string): void {
-        const newRoom: ChatRoom = {
-            id: `r-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            name: roomName,
-            messageHistory: []
-        }
-        setRooms(prev => {
-            const newRooms = new Map(prev)
-            newRooms.set(newRoom.id, newRoom)
-            localStorage.setItem('rooms', JSON.stringify(Array.from(newRooms.entries())))
-            return newRooms
-        })
-        setCurrentRoom(newRoom)
-    }
-
-    function removeRoom(roomId: string): void {
-        if (rooms.size <= 1) return
-        setRooms(prev => {
-            const newRooms = new Map(prev)
-            newRooms.delete(roomId)
-            localStorage.setItem('rooms', JSON.stringify(Array.from(newRooms.entries())))
-            return newRooms
-        })
-        setIsRoomJustDeleted(true)
-    }
+    // КОМНАТЫ ---------------------------------------------------------------------------------
 
     const addNewMessage = (newMessage: { text: string }) => {
         if (currentRoom) {
@@ -74,17 +45,17 @@ const Chat = () => {
         }
     }
 
-    useEffect(() => {
-        const firstKey = rooms.keys().next().value
-        if (firstKey) changeRoom(firstKey)
-        setIsRoomJustDeleted(false)
-    }, [isRoomJustDeleted])
+    // ПОЛЬЗОВАТЕЛИ ---------------------------------------------------------------------------------
+
+    function changeUser(userId: string): void {
+        const newUser = mock.users.get(userId)
+        if (newUser) {
+            setCurrentUser(newUser)
+        } 
+    }
 
     const openUserPicker = () => setIsUserPickerOpen(true)
     const closeUserPicker = () => setIsUserPickerOpen(false)
-
-    const openRoomAddWindow = () => setIsRoomAddWindowOpen(true)
-    const closeRoomAddWindow = () => setIsRoomAddWindowOpen(false)
 
     return(
         <div className={classes.chat}>

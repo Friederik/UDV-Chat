@@ -1,52 +1,94 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ChatRoom } from "../interfaces/propTypes"
+import useChatLocalStorage, { ChatTypes } from "./useChatLocalStorage"
 
-const useChatRooms = (initialRoom: ChatRoom) => {
-    const [rooms, setRooms] = useState<Map<string, ChatRoom>>(() => {
-        const stored = localStorage.getItem('rooms')
-        console.log(stored)
-        if (stored) {
-            return new Map<string, ChatRoom>(JSON.parse(stored))
+/**
+ * Хук для управления комнатами
+ * @param initialRoom Комната по умолчанию
+ * @returns [ МНОГО ]
+ */
+const useChatRooms = (
+    initialRoom: ChatRoom
+): [
+    ChatRoom,
+    React.Dispatch<React.SetStateAction<ChatRoom>>,
+    Map<string, ChatRoom>,
+    boolean,
+    () => void,
+    () => void,
+    (roomId: string) => void,
+    (roomName: string) => void,
+    (roomId: string) => void
+] => {
+    const [ rooms, setRooms, currentRoom, setCurrentRoom ] = useChatLocalStorage(ChatTypes.Rooms, initialRoom)
+    const [ isRoomAddWindowOpen, setIsRoomAddWindowOpen ] = useState(false) // Управление добавлением комнаты
+    const [ isRoomJustDeleted,  setIsRoomJustDeleted ] = useState(false)    // Управление удалением комнаты
+
+    /**
+     * Поменять комнату
+     * @param roomId ID новой комнаты
+     */
+    const changeRoom = (roomId: string) => {
+        const newRoom = rooms.get(roomId)
+        if(newRoom) {
+            setCurrentRoom(newRoom)
         }
-        return new Map([])
-    })
+        console.log(rooms.get(roomId))
+    }
 
-    const [currentRoom, setCurrentRoom] = useState(() => {
-        const stored = Array.from(rooms)
-        if (stored && stored.length > 0) {
-            return stored[0][1]
+    /**
+     * Добавить новую комнату
+     * @param roomName Название новой комнаты
+     */
+    const addNewRoom = (roomName: string) => {
+        const newRoom: ChatRoom = {
+            id: `r-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            name: roomName,
+            messageHistory: []
         }
-        rooms.set(initialRoom.id, initialRoom)
-        return initialRoom
-    })
-
-    useEffect(() => {
-        if (!currentRoom) return
-
         setRooms(prev => {
             const newRooms = new Map(prev)
-            newRooms.set(currentRoom.id, currentRoom)
+            newRooms.set(newRoom.id, newRoom)
             localStorage.setItem('rooms', JSON.stringify(Array.from(newRooms.entries())))
             return newRooms
         })
-        
-    }, [currentRoom])
-
-    useEffect(() => {
-        const stored = localStorage.getItem('rooms')
-        if (stored) {
-            const roomsMap: Map<string, ChatRoom> = new Map(JSON.parse(stored))
-            setRooms(roomsMap)
-        }
-        console.log('Чат загружен!')
-    }, [])
-
-    return{
-        rooms,
-        setRooms,
-        currentRoom,
-        setCurrentRoom
+        setCurrentRoom(newRoom)
     }
+
+    /**
+     * Удаление выбранной комнаты
+     * @param roomId ID удаляемой комнаты
+     */
+    const removeRoom = (roomId: string) => {
+        if (rooms.size <= 1) return
+        setRooms(prev => {
+            const newRooms = new Map(prev)
+            newRooms.delete(roomId)
+            localStorage.setItem('rooms', JSON.stringify(Array.from(newRooms.entries())))
+            return newRooms
+        })
+        setIsRoomJustDeleted(true)
+    }
+
+    const openRoomAddWindow = () => setIsRoomAddWindowOpen(true)
+    const closeRoomAddWindow = () => setIsRoomAddWindowOpen(false)
+
+    /**
+     * Перемещение в другую комнату при удалении текущей
+     */
+    useEffect(() => {
+            const firstKey = rooms.keys().next().value
+            if (firstKey) changeRoom(firstKey)
+            setIsRoomJustDeleted(false)
+        }, [isRoomJustDeleted])
+
+    return [
+        currentRoom, setCurrentRoom,
+        rooms, isRoomAddWindowOpen,
+        openRoomAddWindow, closeRoomAddWindow,
+        changeRoom, addNewRoom, removeRoom
+    ]
 }
 
 export default useChatRooms
+
