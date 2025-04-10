@@ -1,16 +1,15 @@
 import Room from "../Room/Room"
 import * as mock from "../../data/mock"
 import * as data from '../../data/storage'
-import { useEffect, useState } from "react"
 import classes from './Chat.module.scss'
 import RoomPicker from "../RoomPicker/RoomPicker"
 import UserPicker from "../UserPicker/UserPicker"
 import UserProfile from "../UserPicker/UserProfile"
-import { ChatMessage, ChatRoom } from "../../interfaces/propTypes"
+import { ChatMessage } from "../../interfaces/propTypes"
 import InputForm from "../Input/InputForm"
 import RoomAddWindow from "../RoomPicker/RoomAddWindow"
-import useChatLocalStorage, { ChatTypes } from "../../hooks/useChatLocalStorage"
 import useChatRooms from "../../hooks/useChatRooms"
+import useChatUsers from "../../hooks/useChatUsers"
 
 const Chat = () => {
     const [
@@ -21,14 +20,12 @@ const Chat = () => {
     ] = useChatRooms(data.initialRoom)
 
     const [
+        currentUser, setCurrentUser,
         users,
-        setUsers,
-        currentUser,
-        setCurrentUser 
-    ] = useChatLocalStorage(ChatTypes.Users, data.initialUser)
-    const [ isUserPickerOpen, setIsUserPickerOpen ] = useState(false)
-
-    // КОМНАТЫ ---------------------------------------------------------------------------------
+        changeUser,
+        isUserPickerOpen,
+        openUserPicker, closeUserPicker
+    ] = useChatUsers(data.initialUser)
 
     const addNewMessage = (newMessage: { text: string }) => {
         if (currentRoom) {
@@ -45,18 +42,6 @@ const Chat = () => {
         }
     }
 
-    // ПОЛЬЗОВАТЕЛИ ---------------------------------------------------------------------------------
-
-    function changeUser(userId: string): void {
-        const newUser = mock.users.get(userId)
-        if (newUser) {
-            setCurrentUser(newUser)
-        } 
-    }
-
-    const openUserPicker = () => setIsUserPickerOpen(true)
-    const closeUserPicker = () => setIsUserPickerOpen(false)
-
     return(
         <div className={classes.chat}>
             <div className={classes.userProfile}>
@@ -70,7 +55,7 @@ const Chat = () => {
             <InputForm addNewMessage={addNewMessage}/>
 
             <RoomAddWindow addNewRoom={addNewRoom} isOpen={isRoomAddWindowOpen} onClose={closeRoomAddWindow} />
-            <UserPicker users={mock.users} changeUser={changeUser} isOpen={isUserPickerOpen} onClose={closeUserPicker}/>
+            <UserPicker users={users} changeUser={changeUser} isOpen={isUserPickerOpen} onClose={closeUserPicker}/>
         </div>
     )
 }
