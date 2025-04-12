@@ -13,6 +13,7 @@ const useChatRooms = (
     ChatRoom,
     React.Dispatch<React.SetStateAction<ChatRoom>>,
     Map<string, ChatRoom>,
+    React.Dispatch<React.SetStateAction<Map<string, ChatRoom>>>,
     boolean,
     () => void,
     () => void,
@@ -33,7 +34,7 @@ const useChatRooms = (
         if(newRoom) {
             setCurrentRoom(newRoom)
         }
-        console.log(rooms.get(roomId))
+        console.log(`Вы вошли в комнату ${newRoom?.id} ${newRoom?.name}`)
     }
 
     /**
@@ -53,6 +54,7 @@ const useChatRooms = (
             return newRooms
         })
         setCurrentRoom(newRoom)
+        console.log(`Вы вошли в комнату ${newRoom?.id} ${newRoom?.name}`)
     }
 
     /**
@@ -84,7 +86,7 @@ const useChatRooms = (
 
     return [
         currentRoom, setCurrentRoom,
-        rooms, isRoomAddWindowOpen,
+        rooms, setRooms, isRoomAddWindowOpen,
         openRoomAddWindow, closeRoomAddWindow,
         changeRoom, addNewRoom, removeRoom
     ]
