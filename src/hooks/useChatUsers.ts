@@ -32,7 +32,7 @@ const useChatUsers = (
         if (newUser) {
             setCurrentUser(newUser)
         } 
-        console.log(users.get(userId))
+        console.log(`Вы выбрали пользователя ${newUser?.id} ${newUser?.name}`)
     }
 
     /**

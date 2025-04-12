@@ -32,6 +32,8 @@ const InputForm = (props: InputFormProps) => {
                 id='inputMessage' 
                 className={classes.input__message}
                 type="text" 
+                name="type-message-field"
+                autoComplete="off"
                 value={inputValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}

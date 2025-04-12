@@ -89,7 +89,15 @@ const Chat = () => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
-      }, [])
+    }, [])
+
+    useEffect(() => {
+        const firstKeyRooms = rooms.keys().next().value
+        if (firstKeyRooms) changeRoom(firstKeyRooms)
+            
+        const firstKeyUsers = users.keys().next().value
+        if (firstKeyUsers) changeUser(firstKeyUsers)
+    }, [isJustCleared])
 
     return(
         <div className={classes.chat}>
