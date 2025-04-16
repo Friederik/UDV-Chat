@@ -22,7 +22,7 @@ const Chat = () => {
     ] = useChatRooms(data.initialRoom)
 
     const [
-        currentUser, setCurrentUser,
+        currentUser, 
         users, setUsers, isUserPickerOpen,
         openUserPicker, closeUserPicker,
         changeUser, addNewUser

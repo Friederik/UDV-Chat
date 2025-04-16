@@ -11,7 +11,6 @@ const useChatUsers = (
     initialUser: ChatUser
 ): [
     ChatUser,
-    React.Dispatch<React.SetStateAction<ChatUser>>,
     Map<string, ChatUser>,
     React.Dispatch<React.SetStateAction<Map<string, ChatUser>>>,
     boolean,
@@ -69,7 +68,7 @@ const useChatUsers = (
     const closeUserPicker = () => setIsUserPickerOpen(false)
 
     return [
-        currentUser, setCurrentUser,
+        currentUser,
         users, setUsers, isUserPickerOpen,
         openUserPicker, closeUserPicker,
         changeUser, addNewUser
