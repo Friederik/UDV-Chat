@@ -2,7 +2,7 @@
   "name": "udv-chat",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://friederik.github.io/UDV-Chat/",
+  "homepage": "https://Friederik.github.io/UDV-Chat/",
   "type": "module",
   "scripts": {
     "dev": "vite",
