@@ -120,10 +120,10 @@ const Chat = () => {
             <div className={classes.userProfile}>
                 <UserProfile user={currentUser} />
                 <button onClick={openUserPicker}>
-                    <img src="assets/picker.svg" alt="picker"/>
+                    <img src="/assets/picker.svg" alt="picker"/>
                 </button>
                 <button style={{backgroundColor: 'red'}} onClick={clearStorage}>
-                    <img src="assets/picker.svg" alt="picker"/>
+                    <img src="/assets/picker.svg" alt="picker"/>
                 </button>
             </div>
             <RoomPicker 

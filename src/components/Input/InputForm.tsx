@@ -81,20 +81,20 @@ const InputForm = (props: InputFormProps) => {
                 placeholder='Введите сообщение'
             />
             <button>
-                <img src="assets\smile.svg" alt="emoji" onClick={() => {
+                <img src="/assets/smile.svg" alt="emoji" onClick={() => {
                     isEmojiOpen ? closeEmojiPicker() : openEmojiPicker()
                 }}/>
             </button>
             <button>
-                <img src="assets\attach.svg" alt="attach" />
+                <img src="/assets/attach.svg" alt="attach" />
             </button>
             <button>
-                <img src="assets\search.svg" alt="search" onClick={() => {
+                <img src="/assets/search.svg" alt="search" onClick={() => {
                     isSearchOpen ? closeSearch() : openSearch()
                 }}/>
             </button>
             <button>
-                <img src="assets\send.svg" alt="send" onClick={() => sendMessage()}/>
+                <img src="/assets/send.svg" alt="send" onClick={() => sendMessage()}/>
             </button>
             
             <CustomEmojiPicker
