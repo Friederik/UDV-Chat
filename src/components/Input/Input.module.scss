@@ -7,3 +7,13 @@
 .input__message {
     width: 100%;    
 }
+
+.inputDialog {
+    position: absolute;
+    bottom: 3rem;
+}
+
+.emojis {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}

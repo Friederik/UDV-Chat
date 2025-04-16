@@ -12,6 +12,7 @@ import useChatUsers from "../../hooks/useChatUsers"
 import { useEffect, useState } from "react"
 import { ChatTypes } from "../../hooks/useChatLocalStorage"
 
+
 const Chat = () => {
     const [
         currentRoom, setCurrentRoom,
@@ -29,6 +30,12 @@ const Chat = () => {
 
     const [ isJustCleared, setIsJustCleared ] = useState(false)
 
+    const [ searchValue, setSearchValue ] = useState('')
+
+    /**
+     * Добавить новое сообщение в текущую комнату
+     * @param newMessage Новое сообщение
+     */
     const addNewMessage = (newMessage: { text: string }) => {
         if (currentRoom) {
             const message: ChatMessage = { 
@@ -44,6 +51,9 @@ const Chat = () => {
         }
     }
 
+    /**
+     * Очищение localStorage
+     */
     const clearStorage = () => {
         localStorage.clear()
 
@@ -78,6 +88,20 @@ const Chat = () => {
         setIsJustCleared(false)
     }, [isJustCleared])
 
+    /**
+     * Сброс комнаты при очищении
+     */
+    useEffect(() => {
+        const firstKeyRooms = rooms.keys().next().value
+        if (firstKeyRooms) changeRoom(firstKeyRooms)
+            
+        const firstKeyUsers = users.keys().next().value
+        if (firstKeyUsers) changeUser(firstKeyUsers)
+    }, [isJustCleared])
+
+    /**
+     * Отмена Esc
+     */
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -90,14 +114,6 @@ const Chat = () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
     }, [])
-
-    useEffect(() => {
-        const firstKeyRooms = rooms.keys().next().value
-        if (firstKeyRooms) changeRoom(firstKeyRooms)
-            
-        const firstKeyUsers = users.keys().next().value
-        if (firstKeyUsers) changeUser(firstKeyUsers)
-    }, [isJustCleared])
 
     return(
         <div className={classes.chat}>
@@ -119,8 +135,14 @@ const Chat = () => {
             <Room 
                 room={currentRoom} 
                 selectedUser={currentUser}
+                searchValue={searchValue}
             />
-            <InputForm addNewMessage={addNewMessage}/>
+            
+            <InputForm 
+                addNewMessage={addNewMessage}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+            />
 
             <RoomAddWindow 
                 addNewRoom={addNewRoom} 
