@@ -36,18 +36,21 @@ const Chat = () => {
      * Добавить новое сообщение в текущую комнату
      * @param newMessage Новое сообщение
      */
-    const addNewMessage = (newMessage: { text: string }) => {
+    const addNewMessage = (newMessage: { text: string, mediaURL: string }) => {
         if (currentRoom) {
             const message: ChatMessage = { 
                 id: `m-${currentRoom.messageHistory.length+1}`, 
                 user: currentUser,
-                text: newMessage.text,
-                timestamp: new Date().toISOString()
+                text: newMessage.text || '',
+                timestamp: new Date().toISOString(),
+                mediaURL: newMessage.mediaURL || undefined
             }
             console.log(currentRoom.id, message)
             const newMessageHistory = [...currentRoom.messageHistory, message]
+            
             const newRoom = {...currentRoom, messageHistory: newMessageHistory}
             setCurrentRoom(newRoom)
+            console.log(newRoom)
         }
     }
 

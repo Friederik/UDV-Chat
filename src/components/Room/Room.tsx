@@ -13,13 +13,23 @@ const Room = (props : RoomProps) => {
         <section className={classes.room}>
             { props.room.messageHistory.length > 0
             ? props.room.messageHistory.map(message => {
-                if (props.searchValue === '' || message.text.toLowerCase().includes(props.searchValue.toLocaleLowerCase())) return (
-                    <Message 
-                        key={message.id} 
-                        message={message} 
-                        isActiveUser={props.selectedUser.id === message.user.id}
-                    />
-                )
+                if (message.text) {
+                    if (props.searchValue === '' || message.text.toLowerCase().includes(props.searchValue.toLocaleLowerCase())) return (
+                        <Message 
+                            key={message.id} 
+                            message={message} 
+                            isActiveUser={props.selectedUser.id === message.user.id}
+                        />
+                    )
+                } else if (message.mediaURL) {
+                    if (props.searchValue === '') return (
+                        <Message 
+                            key={message.id} 
+                            message={message} 
+                            isActiveUser={props.selectedUser.id === message.user.id}
+                        />
+                    )
+                }
             })
             : <article className={classes.roomEmpty}>
                 Тут Пусто!

@@ -8,8 +8,9 @@ export interface ChatUser {
 export interface ChatMessage {
     id: string
     user: ChatUser
-    text: string
+    text?: string
     timestamp: string
+    mediaURL?: string
 }
 
 export interface ChatRoom {

@@ -4,14 +4,16 @@ import CustomEmojiPicker from './CustomEmojiPicker'
 import Search from './Search'
 
 interface InputFormProps {
-    addNewMessage: (newMessage: { text: string }) => void
+    addNewMessage: (newMessage: { text: string, mediaURL: string }) => void
     searchValue: string
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 const InputForm = (props: InputFormProps) => {
-    const [inputValue, setInputValue] = useState('')
+    const [ inputValue, setInputValue ] = useState('')
+    const [ mediaURL, setMediaURL ] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
+    const attachRef = useRef<HTMLInputElement>(null)
 
     const [ isEmojiOpen, setIsEmojiOpen ] = useState(false)
 
@@ -57,14 +59,24 @@ const InputForm = (props: InputFormProps) => {
     }
 
     const sendMessage = () => {
-        if (inputValue.trim() !== '') {
-            props.addNewMessage({text: inputValue})
+        if (mediaURL || inputValue.trim() !== '') {
+            props.addNewMessage({text: inputValue, mediaURL: mediaURL})
             setInputValue('')
-            closeEmojiPicker()
+            setMediaURL('')
 
+            closeEmojiPicker()
             console.log(inputValue)
+            console.log(mediaURL)
         }
     }
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file && file.type.startsWith('image/')) {
+          const tempUrl = URL.createObjectURL(file);
+          setMediaURL(tempUrl)
+        }
+      }
 
     return (
         <div className={classes.input}>
@@ -85,8 +97,18 @@ const InputForm = (props: InputFormProps) => {
                     isEmojiOpen ? closeEmojiPicker() : openEmojiPicker()
                 }}/>
             </button>
-            <button>
-                <img src="/assets/attach.svg" alt="attach" />
+            <input
+                id="file"
+                type="file"
+                accept="image/*"
+                ref={attachRef}
+                onChange={handleFileChange}
+                style={{display: 'none'}}
+            />
+            <button onClick={() => inputRef.current?.click()}>
+                <label htmlFor="file">
+                    <img src="/assets/attach.svg" alt="attach" />
+                </label>
             </button>
             <button>
                 <img src="/assets/search.svg" alt="search" onClick={() => {

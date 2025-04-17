@@ -19,13 +19,14 @@ export const messagesRoom: ChatMessage[] = [
         id: 'm-1',
         user: fakeUser,
         text: "Добро пожаловать в мой чат 🔥🔥🔥.",
-        timestamp: "2025-04-12T14:30:00.000Z"
+        timestamp: "2025-04-12T14:30:00.000Z",
+        mediaURL: "/assets/welcome.png"
     },
     {
         id: 'm-2',
         user: initialUser,
         text: "Всем привет 🙌.",
-        timestamp: "2025-04-12T14:35:00.000Z"
+        timestamp: "2025-04-12T14:35:00.000Z",
     }
 ]
 

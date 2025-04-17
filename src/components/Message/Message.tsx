@@ -15,8 +15,19 @@ const Message = ( props: MessageProps ) => {
         <header style={{backgroundColor: props.message.user.color}} className={classes.message__header}>
           <span>{props.message.user.name}</span>
           <span> {date.toLocaleTimeString()}</span>
-        </header>
-        <p className={classes.message__p}>{props.message.text}</p>
+        </header>        
+        {props.message.text && <p className={classes.message__p}>{props.message.text}</p>}
+        {props.message.mediaURL &&
+          <img 
+            src={props.message.mediaURL}
+            className={classes.message__p} 
+            alt="media" 
+            style={{width: "90%"}}
+            onError={(e) => {
+              e.currentTarget.outerHTML = `<p class=${classes.message__p}>🔥 Картинка сгорела</p>`
+            }}
+          />
+        }
       </article>
     )
 }
