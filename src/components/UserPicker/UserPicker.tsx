@@ -3,10 +3,12 @@ import classes from './UserPicker.module.scss'
 import { ChatUser } from "../../interfaces/propTypes"
 import UserProfile from "./UserProfile"
 import UserAddWindow from "./UserAddWindow"
+import CheckPasswordWindow from "./CheckPasswordWindow"
 
 
 interface UserPickerProps {
     users: Map<string, ChatUser>
+    currentUser: ChatUser
     changeUser: (userId: string) => void
     addNewUser: (userName: string, password: string, color: string) => void
     isOpen: boolean
@@ -14,11 +16,21 @@ interface UserPickerProps {
 }
 const UserPicker = (props: UserPickerProps) => {
     const [ isCreateWindowOpen, setIsCreateWindowOpen ] = useState(false)
+    const [ isCheckPasswordWindowOpen, setIsCheckPasswordWindowOpen ] = useState(false)
+    const [ passwordCheckValue, setPasswordCheckValue ] = useState('')
+    const [ checkingUser, setCheckingUser ] = useState<ChatUser | null>(null)
     const dialogRef = useRef<HTMLDialogElement | null>(null)
     const createWindowRef = useRef<HTMLDivElement>(null)
+    const checkPasswordRef = useRef<HTMLDialogElement | null>(null)
     
     const openCreateWindow = () => setIsCreateWindowOpen(true)
     const closeCreateWindow = () => setIsCreateWindowOpen(false)
+
+    const openCheckPasswordWindow = () => setIsCheckPasswordWindowOpen(true)
+    const closeCheckPasswordWindow = () => {
+        setPasswordCheckValue('')
+        setIsCheckPasswordWindowOpen(false)
+    }
 
     useEffect(() => {
         if (isCreateWindowOpen) {
@@ -32,6 +44,15 @@ const UserPicker = (props: UserPickerProps) => {
         }
     }, [isCreateWindowOpen])
 
+    useEffect(() => {
+        if (checkPasswordRef.current) {
+            if (isCheckPasswordWindowOpen) {
+                checkPasswordRef.current.showModal()
+            } else {
+                checkPasswordRef.current.close()
+            }
+        }
+    }, [isCheckPasswordWindowOpen])
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -42,15 +63,14 @@ const UserPicker = (props: UserPickerProps) => {
             }
         }
     }, [props.isOpen])
-    
+
     return(
         <dialog className={classes.userPicker} ref={dialogRef}>
             <nav style={{marginLeft: 0, marginRight: "auto"}}>
                 {Array.from(props.users).map(([userId, user]) => 
                     <button key={userId} onClick={() => { 
-                        props.changeUser(userId) 
-                        props.onClose()
-                        closeCreateWindow()
+                        setCheckingUser(user)
+                        openCheckPasswordWindow()
                         }}>
                         <UserProfile user={user}/>
                     </button>
@@ -69,6 +89,18 @@ const UserPicker = (props: UserPickerProps) => {
                     closeCreateWindow()
                 }}>Закрыть</button>
             </nav>
+            <CheckPasswordWindow
+                currentCheckingUser={checkingUser}
+                passwordCheckValue={passwordCheckValue}
+                setPasswordCheckValue={setPasswordCheckValue}
+                checkPasswordRef={checkPasswordRef}
+                closeCheckPasswordWindow={closeCheckPasswordWindow}
+                changeUser={props.changeUser}
+                closeUserPicker={() => {
+                    props.onClose()
+                    closeCreateWindow()
+                }}
+            />
         </dialog>
     )
 }

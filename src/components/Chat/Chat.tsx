@@ -175,6 +175,7 @@ const Chat = () => {
             />
             <UserPicker 
                 users={users} 
+                currentUser={currentUser}
                 changeUser={changeUser} 
                 addNewUser={addNewUser}
                 isOpen={isUserPickerOpen} 
