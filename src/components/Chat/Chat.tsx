@@ -31,6 +31,7 @@ const Chat = () => {
     const [ isJustCleared, setIsJustCleared ] = useState(false)
 
     const [ searchValue, setSearchValue ] = useState('')
+    const [ replyMessage, setReplyMessage ] = useState<ChatMessage | null>(null)
 
     /**
      * Добавить новое сообщение в текущую комнату
@@ -43,15 +44,34 @@ const Chat = () => {
                 user: currentUser,
                 text: newMessage.text || '',
                 timestamp: new Date().toISOString(),
-                mediaURL: newMessage.mediaURL || undefined
+                mediaURL: newMessage.mediaURL || undefined,
+                reply: replyMessage || undefined
             }
             console.log(currentRoom.id, message)
             const newMessageHistory = [...currentRoom.messageHistory, message]
-            
             const newRoom = {...currentRoom, messageHistory: newMessageHistory}
             setCurrentRoom(newRoom)
-            console.log(newRoom)
+
+            removeReplyMessage()
         }
+    }
+
+    /**
+     * Добавляет ответ на сообщение
+     * @param messageId ID сообщения в комнате
+     */
+    const addReplyMessage = (messageId: string) => {
+        if (currentRoom.messageHistory.length > 0) {
+            setReplyMessage(currentRoom.messageHistory[Number(messageId.slice(2))-1])
+            console.log(currentRoom.messageHistory[Number(messageId.slice(2))-1])
+        }
+    }
+
+    /**
+     * Очищает ответ
+     */
+    const removeReplyMessage = () => {
+        setReplyMessage(null)
     }
 
     /**
@@ -139,8 +159,9 @@ const Chat = () => {
                 room={currentRoom} 
                 selectedUser={currentUser}
                 searchValue={searchValue}
+                addReplyMessage={addReplyMessage}
             />
-            
+            {replyMessage && <p>{replyMessage.user.name}</p>}
             <InputForm 
                 addNewMessage={addNewMessage}
                 searchValue={searchValue}

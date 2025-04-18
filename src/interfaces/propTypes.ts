@@ -11,6 +11,7 @@ export interface ChatMessage {
     text?: string
     timestamp: string
     mediaURL?: string
+    reply?: ChatMessage
 }
 
 export interface ChatRoom {

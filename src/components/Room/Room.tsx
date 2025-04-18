@@ -6,6 +6,7 @@ interface RoomProps {
     room: ChatRoom
     selectedUser: ChatUser
     searchValue: string
+    addReplyMessage: (messageId: string) => void
 }
 
 const Room = (props : RoomProps) => {
@@ -19,6 +20,7 @@ const Room = (props : RoomProps) => {
                             key={message.id} 
                             message={message} 
                             isActiveUser={props.selectedUser.id === message.user.id}
+                            addReplyMessage={props.addReplyMessage}
                         />
                     )
                 } else if (message.mediaURL) {
@@ -27,6 +29,7 @@ const Room = (props : RoomProps) => {
                             key={message.id} 
                             message={message} 
                             isActiveUser={props.selectedUser.id === message.user.id}
+                            addReplyMessage={props.addReplyMessage}
                         />
                     )
                 }
