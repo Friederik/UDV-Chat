@@ -1,6 +1,7 @@
 import classes from './Room.module.scss'
 import Message from '../Message/Message'
 import { ChatRoom, ChatUser } from '../../interfaces/propTypes'
+import { useEffect, useRef } from 'react'
 
 interface RoomProps {
     room: ChatRoom
@@ -10,8 +11,17 @@ interface RoomProps {
 }
 
 const Room = (props : RoomProps) => {
+    const chatContainerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const chat = chatContainerRef.current
+        if (chat) {
+            chat.scrollTop = chat.scrollHeight
+        }
+    }, [props.room])
+
     return(
-        <section className={classes.room}>
+        <section ref={chatContainerRef} className={classes.room}>
             { props.room.messageHistory.length > 0
             ? props.room.messageHistory.map(message => {
                 if (message.text) {
