@@ -31,7 +31,7 @@ const Search = (props: SearchProps) => {
                     value={props.searchValue}
                     onChange={props.handleSearchChange}
                 />
-                <button onClick={props.ereaseSearch}>×</button>
+                <button onClick={props.ereaseSearch}>&times;</button>
             </div>
         </dialog>
     )

@@ -9,11 +9,11 @@ interface RoomTabProps {
 
 const RoomTab = (props: RoomTabProps) => {
     return(
-        <article className={classes.roomTab}>
-            <button onClick={() => props.changeRoom(props.room.id)}>
+        <article id={props.room.id} className={classes.roomTab}>
+            <button id={`name-${props.room.id}`} onClick={() => props.changeRoom(props.room.id)}>
                 {props.room.name}
             </button>
-            <button onClick={() => props.removeRoom(props.room.id)}>
+            <button id={`close-${props.room.id}`} onClick={() => props.removeRoom(props.room.id)}>
                 &times;
             </button>
         </article>

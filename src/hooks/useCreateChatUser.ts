@@ -1,5 +1,9 @@
 import { useRef, useState } from "react"
 
+/**
+ * Хук создания нового пользователя
+ * @returns [ МНОГО ]
+ */
 const useCreateChatUser = (): [
     string, 
     string,

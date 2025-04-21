@@ -21,7 +21,7 @@ const Room = (props : RoomProps) => {
     }, [props.room])
 
     return(
-        <section ref={chatContainerRef} className={classes.room}>
+        <section id='currentRoom' ref={chatContainerRef} className={classes.room}>
             { props.room.messageHistory.length > 0
             ? props.room.messageHistory.map(message => {
                 if (message.text) {

@@ -7,10 +7,10 @@ interface UserProfileProps {
 
 const UserProfile = (props: UserProfileProps) => {
     return(
-        <div className={classes.userProfile}>
+        <article className={classes.userProfile}>
             <div className={classes.userAvatar} style={{backgroundColor: props.user.color}}></div>
             <h1>{props.user.name}</h1>
-        </div>
+        </article>
     )
 }
 

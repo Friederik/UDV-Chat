@@ -1,16 +1,20 @@
-import Room from "../Room/Room"
+import { useEffect, useState } from "react"
+
 import * as data from '../../data/storage'
-import classes from './Chat.module.scss'
-import RoomPicker from "../RoomPicker/RoomPicker"
-import UserPicker from "../UserPicker/UserPicker"
-import UserProfile from "../UserPicker/UserProfile"
 import { ChatMessage, ChatRoom, ChatUser } from "../../interfaces/propTypes"
-import InputForm from "../Input/InputForm"
-import RoomAddWindow from "../RoomPicker/RoomAddWindow"
+import { ChatTypes } from "../../hooks/useChatLocalStorage"
+import classes from './Chat.module.scss'
+
 import useChatRooms from "../../hooks/useChatRooms"
 import useChatUsers from "../../hooks/useChatUsers"
-import { useEffect, useState } from "react"
-import { ChatTypes } from "../../hooks/useChatLocalStorage"
+import useChatUtilities from "../../hooks/useChatUtilities"
+
+import Room from "../Room/Room"
+import RoomPicker from "../RoomPicker/RoomPicker"
+import RoomAddWindow from "../RoomPicker/RoomAddWindow"
+import UserPicker from "../UserPicker/UserPicker"
+import UserManager from "../UserPicker/UserManager"
+import InputForm from "../Input/InputForm"
 
 
 const Chat = () => {
@@ -28,10 +32,13 @@ const Chat = () => {
         changeUser, addNewUser
     ] = useChatUsers(data.initialUser)
 
-    const [ isJustCleared, setIsJustCleared ] = useState(false)
+    const [
+        searchValue, setSearchValue,
+        replyMessage, setReplyMessage,
+        removeReplyMessage
+    ] = useChatUtilities()
 
-    const [ searchValue, setSearchValue ] = useState('')
-    const [ replyMessage, setReplyMessage ] = useState<ChatMessage | null>(null)
+    const [ isJustCleared, setIsJustCleared ] = useState(false)
 
     /**
      * Добавить новое сообщение в текущую комнату
@@ -65,13 +72,6 @@ const Chat = () => {
             setReplyMessage(currentRoom.messageHistory[Number(messageId.slice(2))-1])
             console.log(currentRoom.messageHistory[Number(messageId.slice(2))-1])
         }
-    }
-
-    /**
-     * Очищает ответ
-     */
-    const removeReplyMessage = () => {
-        setReplyMessage(null)
     }
 
     /**
@@ -122,33 +122,13 @@ const Chat = () => {
         if (firstKeyUsers) changeUser(firstKeyUsers)
     }, [isJustCleared])
 
-    /**
-     * Отмена Esc
-     */
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                e.preventDefault()
-            }
-        }
-    
-        window.addEventListener('keydown', handleKeyDown)
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown)
-        }
-    }, [])
-
     return(
-        <div className={classes.chat}>
-            <div className={classes.userProfile}>
-                <UserProfile user={currentUser} />
-                <button onClick={openUserPicker}>
-                    <img src="/assets/picker.svg" alt="picker"/>
-                </button>
-                <button style={{backgroundColor: 'red'}} onClick={clearStorage}>
-                    <img src="/assets/picker.svg" alt="picker"/>
-                </button>
-            </div>
+        <div id="chatWindow" className={classes.chat}>
+            <UserManager 
+                currentUser={currentUser} 
+                openUserPicker={openUserPicker} 
+                clearStorage={clearStorage}
+            />
             <RoomPicker 
                 rooms={rooms} 
                 changeRoom={changeRoom} 
@@ -161,13 +141,12 @@ const Chat = () => {
                 searchValue={searchValue}
                 addReplyMessage={addReplyMessage}
             />
-            {replyMessage && <p>{replyMessage.user.name}</p>}
             <InputForm 
                 addNewMessage={addNewMessage}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
+                replyMessage={replyMessage}
             />
-
             <RoomAddWindow 
                 addNewRoom={addNewRoom} 
                 isOpen={isRoomAddWindowOpen} 

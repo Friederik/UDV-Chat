@@ -24,7 +24,8 @@ const Message = ( props: MessageProps ) => {
             isActiveUser={false}  
           />
         }      
-        {props.message.text && <p className={classes.message__p}>{props.message.text}</p>}
+        {props.message.text && 
+          <p className={classes.message__p}>{props.message.text}</p>}
         {props.message.mediaURL &&
           <img 
             src={props.message.mediaURL}

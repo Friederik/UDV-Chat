@@ -18,7 +18,7 @@ const UserAddWindow = (props: UserAddWindowProps) => {
     ] = useCreateChatUser()
 
     return(
-        <div>
+        <>
             <button onClick={props.openCreateWindow}>+</button>
             <main ref={props.createWindowRef}>
                 <input 
@@ -60,7 +60,7 @@ const UserAddWindow = (props: UserAddWindowProps) => {
                     Добавить
                 </button>
             </main>
-        </div>
+        </>
     )
 }
 

@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={
-          <div className={classes.app}>
+          <div id="wrapper" className={classes.app}>
             <Chat/>
           </div>
         }/>
