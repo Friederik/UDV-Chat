@@ -1,5 +1,5 @@
 .roomPicker {
-    position: relative;
+    display: flex;
 }
 
 .roomPickerScroll {
@@ -12,23 +12,38 @@
 }
 
 .roomTab {
-    background-color: darkblue;
-    // height: 1.5rem;
-    color: white;
-    border-radius: 0.2rem;
-    border: 0.1rem groove blue;
-    flex: 0 0 auto;
+    width: 10rem;
+    padding: 0.1rem;
+    display: flex;
+    background-color: #666;
+    border-top-right-radius: 0.4rem;
+    border-top-left-radius: 0.4rem;
+
+    @media (min-width: 480px) {
+        width: 13rem;
+    }
+}
+
+.tab_name {
+    flex: 4;
+    font-size: 1.2rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 10rem;
+    border-top-left-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
+    color: purple;
+
+    @media (min-width: 480px) {
+        font-size: 1.5rem;
+    }
+}
+
+.tab_delete {
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
 }
 
 .roomAddButton {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 1.5rem;
-    // background-color: blue;
-    color: white;
+    border-radius: 0.4rem;
 }

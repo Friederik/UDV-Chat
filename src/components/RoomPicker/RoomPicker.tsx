@@ -14,6 +14,12 @@ interface RoomPickerProps {
 const RoomPicker = (props: RoomPickerProps) => {
     return(
         <section id="roomPicker" className={classes.roomPicker}>
+            <button 
+                id="addRoomButton" 
+                className={classes.roomAddButton} 
+                onClick={() => props.openRoomAddWindow()}>
+                <img className={globalClasses.icon_mini} src="/assets/new_add.svg" alt="add_room"/>
+            </button>
             <nav id="rooms" className={classes.roomPickerScroll}>
                 {Array.from(props.rooms).map(([roomId, room]) => 
                     <RoomTab 
@@ -24,12 +30,6 @@ const RoomPicker = (props: RoomPickerProps) => {
                     />
                 )}
             </nav>
-            <button 
-                id="addRoomButton" 
-                className={classes.roomAddButton} 
-                onClick={() => props.openRoomAddWindow()}>
-                <img className={globalClasses.icon_mini} src="/assets/new_add.svg" alt="add_room"/>
-            </button>
         </section>
     )
 }

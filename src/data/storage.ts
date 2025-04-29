@@ -32,7 +32,7 @@ export const messagesRoom: ChatMessage[] = [
 
 export const initialRoom: ChatRoom = {
     id: 'r-1',
-    name: 'Первый чат',
+    name: 'Приветствие!',
     messageHistory: messagesRoom
 }
 

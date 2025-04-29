@@ -1,7 +1,7 @@
+@use '../../styles/App.module.scss' as gl;
+
 .input {
     display: flex;
-    // width: 100%;
-    // background-color:darkcyan;
 }
 
 .input__message {
@@ -16,4 +16,8 @@
 .emojis {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
+}
+
+.sendActive {
+    @include gl.my-btn(goldenrod, orange);
 }

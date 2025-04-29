@@ -1,3 +1,29 @@
+@mixin center-img {
+  padding: 0.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin my-btn($bg, $hover-bg) {
+  background-color: $bg;
+  display: inline-block;
+  height: 100%;
+  border-width: 0;
+
+  @media (hover: hover) {
+      &:hover {
+          background-color: $hover-bg;
+      }    
+  }
+  
+  @media (hover: none) {
+      &:active {
+          background-color: $hover-bg;
+      }    
+  }
+}
+
 .app {
   background-color: #333;
   width: 100dvw;
@@ -7,37 +33,44 @@
 .icon {
   height: 2rem;
   width: 2rem;
+
+  @include center-img;
 }
 
 .icon_mini {
   height: 1rem;
   width: 1rem;
+  
+  @include center-img;
+
+  @media (min-width: 480px) {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 }
 
 button {
-  background-color: #AAA;
-  display: inline-block;
-  height: 100%;
+  @include my-btn(#aaa, #ccc);
 }
 
 ::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem; 
+  width: 0.4rem;
+  height: 0.4rem; 
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #909fbf; /* Цвет ползунка */
+  background-color: purple; /* Цвет ползунка */
   border-radius: 10px; /* Скругление углов */
 }
 
 /* Стили для "ползунка" при наведении */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Цвет ползунка при наведении */
+  background-color: rgb(172, 0, 172); /* Цвет ползунка при наведении */
 }
 
 /* Стили для дорожки (track) */
 ::-webkit-scrollbar-track {
-  background-color: #d3ddf4; /* Цвет фона скроллбара */
+  background-color: #aaa; /* Цвет фона скроллбара */
   border-radius: 10px; /* Скругление углов */
 }
 

@@ -91,7 +91,7 @@ const InputForm = (props: InputFormProps) => {
                         isSearchOpen ? closeSearch() : openSearch()
                     }}/>
                 </button>
-                <button id='sendButton'>
+                <button id='sendButton' className={inputValue ? classes.sendActive : ''}>
                     <img className={globalClasses.icon} src="/assets/new_send.svg" alt="send" onClick={() => sendMessage()}/>
                 </button>
                 <CustomEmojiPicker
