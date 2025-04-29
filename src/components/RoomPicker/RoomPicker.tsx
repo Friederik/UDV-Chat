@@ -1,6 +1,7 @@
 import { ChatRoom } from "../../interfaces/propTypes"
 
 import classes from "./RoomPicker.module.scss"
+import globalClasses from "../../styles/App.module.scss"
 import RoomTab from "./RoomTab"
 
 interface RoomPickerProps {
@@ -26,8 +27,9 @@ const RoomPicker = (props: RoomPickerProps) => {
             <button 
                 id="addRoomButton" 
                 className={classes.roomAddButton} 
-                onClick={() => props.openRoomAddWindow()}
-            >+</button>
+                onClick={() => props.openRoomAddWindow()}>
+                <img className={globalClasses.icon_mini} src="/assets/new_add.svg" alt="add_room"/>
+            </button>
         </section>
     )
 }

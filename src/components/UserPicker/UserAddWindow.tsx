@@ -1,3 +1,4 @@
+import globalClasses from "../../styles/App.module.scss"
 import useCreateChatUser from "../../hooks/useCreateChatUser"
 import { HexColorPicker } from "react-colorful"
 
@@ -19,7 +20,9 @@ const UserAddWindow = (props: UserAddWindowProps) => {
 
     return(
         <>
-            <button onClick={props.openCreateWindow}>+</button>
+            <button onClick={props.openCreateWindow}>
+                <img className={globalClasses.icon_mini} src="/assets/new_add.svg" alt="add_room"/>
+            </button>
             <main ref={props.createWindowRef}>
                 <input 
                     ref={userNameRef}

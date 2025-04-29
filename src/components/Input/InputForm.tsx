@@ -1,4 +1,5 @@
 import classes from './Input.module.scss'
+import globalClasses from '../../styles/App.module.scss'
 import CustomEmojiPicker from './CustomEmojiPicker'
 import Search from './Search'
 import { ChatMessage } from '../../interfaces/propTypes'
@@ -68,7 +69,7 @@ const InputForm = (props: InputFormProps) => {
                     placeholder='Введите сообщение'
                 />
                 <button id='emojiButton'>
-                    <img src="/assets/smile.svg" alt="emoji" onClick={() => {
+                    <img className={globalClasses.icon} src="/assets/new_smile.svg" alt="emoji" onClick={() => {
                         isEmojiOpen ? closeEmojiPicker() : openEmojiPicker()
                     }}/>
                 </button>
@@ -82,16 +83,16 @@ const InputForm = (props: InputFormProps) => {
                 />
                 <button id='fileAttachButton' onClick={() => inputRef.current?.click()}>
                     <label htmlFor="file">
-                        <img src="/assets/attach.svg" alt="attach" />
+                        <img className={globalClasses.icon} src="/assets/new_attach.svg" alt="attach" />
                     </label>
                 </button>
                 <button id='searchButton'>
-                    <img src="/assets/search.svg" alt="search" onClick={() => {
+                    <img className={globalClasses.icon} src="/assets/new_search.svg" alt="search" onClick={() => {
                         isSearchOpen ? closeSearch() : openSearch()
                     }}/>
                 </button>
                 <button id='sendButton'>
-                    <img src="/assets/send.svg" alt="send" onClick={() => sendMessage()}/>
+                    <img className={globalClasses.icon} src="/assets/new_send.svg" alt="send" onClick={() => sendMessage()}/>
                 </button>
                 <CustomEmojiPicker
                     isOpen={isEmojiOpen}

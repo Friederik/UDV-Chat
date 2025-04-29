@@ -45,7 +45,7 @@ const Room = (props : RoomProps) => {
                 }
             })
             : <article className={classes.roomEmpty}>
-                Тут Пусто!
+                Welcome New Room!
             </article>
             }
         </section>
