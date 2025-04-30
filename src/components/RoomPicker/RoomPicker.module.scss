@@ -33,7 +33,7 @@
     text-overflow: ellipsis;
     border-top-left-radius: 0.4rem;
     border-bottom-left-radius: 0.4rem;
-    color: purple;
+    color: rgb(62, 114, 218);
 
     @media (min-width: 480px) {
         font-size: 1.5rem;
@@ -47,4 +47,14 @@
 
 .roomAddButton {
     border-radius: 0.4rem;
+    min-width: 2rem;
+    width: 2rem;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: 480px) {
+        min-width: 2.5rem;
+        width: 2.5rem;
+    }
 }

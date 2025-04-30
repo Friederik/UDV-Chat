@@ -14,8 +14,8 @@ const Message = ( props: MessageProps ) => {
     return (
       <article onDoubleClick={() => props.addReplyMessage && props.addReplyMessage(props.message.id)} className={`${classes.message} ${props.isActiveUser ? classes['message--active'] : ''}`}>
         <header style={{backgroundColor: props.message.user.color}} className={classes.message__header}>
-          <span>{props.message.user.name}</span>
-          <span> {date.toLocaleTimeString()}</span>
+          <h1>{props.message.user.name}</h1>
+          <h2> {date.toLocaleTimeString()}</h2>
         </header>  
         {props.message.reply && 
           <Message
@@ -23,20 +23,21 @@ const Message = ( props: MessageProps ) => {
             message={props.message.reply} 
             isActiveUser={false}  
           />
-        }      
-        {props.message.text && 
-          <p className={classes.message__p}>{props.message.text}</p>}
-        {props.message.mediaURL &&
-          <img 
-            src={props.message.mediaURL}
-            className={classes.message__p} 
-            alt="media" 
-            style={{width: "90%"}}
-            onError={(e) => {
-              e.currentTarget.outerHTML = `<p class=${classes.message__p}>🔥 Картинка сгорела</p>`
-            }}
-          />
         }
+        <div className={classes.content}>
+          {props.message.text && 
+            <p className={classes.message__p}>{props.message.text}</p>}
+          {props.message.mediaURL &&
+            <img 
+              src={props.message.mediaURL}
+              className={classes.message__img} 
+              alt="media" 
+              style={{width: "90%"}}
+              onError={(e) => {
+                e.currentTarget.outerHTML = `<p class=${classes.message__p}>🔥 Картинка сгорела</p>`
+            }}/>
+          }
+        </div>        
       </article>
     )
 }

@@ -72,26 +72,19 @@ button {
   @include my-btn(#aaa, #ccc);
 }
 
-h1 {
-  max-width: 12rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 ::-webkit-scrollbar {
   width: 0.4rem;
   height: 0.4rem; 
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: purple; /* Цвет ползунка */
+  background-color: rgb(62, 114, 218); /* Цвет ползунка */
   border-radius: 10px; /* Скругление углов */
 }
 
 /* Стили для "ползунка" при наведении */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(172, 0, 172); /* Цвет ползунка при наведении */
+  background-color: rgb(91, 135, 223); /* Цвет ползунка при наведении */
 }
 
 /* Стили для дорожки (track) */

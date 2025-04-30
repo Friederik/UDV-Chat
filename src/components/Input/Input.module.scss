@@ -21,3 +21,19 @@
 .sendActive {
     @include gl.my-btn(goldenrod, orange);
 }
+
+.replyMessage {
+    display: flex;
+    align-items: center;
+    background-color: #222;
+    color: white;
+    
+    p {
+        padding: 0.4rem;
+        margin-right: 0.4rem;
+    }
+}
+
+.undoBtn {
+    background-color: #444;
+}

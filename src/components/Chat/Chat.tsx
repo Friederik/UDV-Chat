@@ -146,6 +146,7 @@ const Chat = () => {
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
                 replyMessage={replyMessage}
+                removeReplyMessage={removeReplyMessage}
             />
             <RoomAddWindow 
                 addNewRoom={addNewRoom} 

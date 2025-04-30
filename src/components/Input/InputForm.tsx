@@ -10,6 +10,7 @@ interface InputFormProps {
     searchValue: string
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
     replyMessage: ChatMessage | null
+    removeReplyMessage: () => void
 }
 
 const InputForm = (props: InputFormProps) => {
@@ -54,7 +55,16 @@ const InputForm = (props: InputFormProps) => {
 
     return (
         <>
-            {props.replyMessage && <article>{props.replyMessage.user.name}</article>}
+            {props.replyMessage && <article className={classes.replyMessage}>
+                <p>{props.replyMessage.user.name}</p>    
+                <button 
+                    className={classes.undoBtn} 
+                    id={props.replyMessage.user.name}
+                    onClick={props.removeReplyMessage}
+                >
+                    <img className={globalClasses.icon_mini} src="/assets/new_delete.svg" alt="delete_room"/>
+                </button>
+            </article>}
             <section id='input' className={classes.input}>
                 <input
                     ref={inputRef}
